@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemopet - Doação de Sangue Animal 🐾🩸</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            500: '#e11d48',
+                            600: '#c81d25',
+                            700: '#9b0f17',
+                            800: '#881337',
+                            bg: '#fdfbf7',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Phone frame styling */
+        .phone-wrapper {
+            max-width: 440px;
+            width: 100%;
+            height: 100vh;
+            max-height: 920px;
+            margin: 0 auto;
+            background: #fdfbf7;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #1f2937;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 640px) {
+            .phone-wrapper {
+                max-width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* Custom scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Pulse animation for urgent badge */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .urgent-pulse {
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+
+        /* Map simulated elements */
+        .map-bg {
+            background-color: #e5e7eb;
+            background-image: 
+                radial-gradient(#cbd5e1 2px, transparent 2px),
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px, 40px 40px, 40px 40px;
+        }
+
+        /* Certificate stamp effect */
+        .gold-stamp {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+        }
+
+        /* Smooth Tab Animations */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-0 sm:p-4 bg-slate-900 select-none">
+
+    <!-- MAIN MOBILE CONTAINER -->
+    <div class="phone-wrapper flex flex-col relative overflow-hidden bg-[#FDFBF7]">
+
+        <!-- TOP DEVICE STATUS BAR -->
+        <div class="bg-[#FDFBF7] pt-3 px-6 pb-2 flex justify-between items-center text-xs font-semibold text-gray-700 z-30 shrink-0 select-none border-b border-gray-100">
+            <span>9:41</span>
+            <div class="w-20 h-4 bg-gray-900 rounded-full mx-auto hidden sm:block"></div>
+            <div class="flex items-center gap-2 text-gray-800">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full text-sm"></i>
+            </div>
+        </div>
+
+        <!-- APP HEADER BAR -->
+        <header class="px-5 py-3 bg-white/90 backdrop-blur-md sticky top-0 z-20 flex justify-between items-center border-b border-gray-100 shadow-sm shrink-0">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-600/30">
+                    <i class="fa-solid fa-paw text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-outfit font-extrabold text-xl text-brand-700 tracking-tight leading-none flex items-center gap-1">
+                        Hemopet <span class="text-xs bg-brand-100 text-brand-700 font-bold px-1.5 py-0.5 rounded-full">PRO</span>
+                    </h1>
+                    <p class="text-[10px] font-medium text-gray-500">Doação de Sangue Animal</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <!-- Points Pill Header -->
+                <button onclick="switchTab('pontos')" class="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1 rounded-full text-amber-800 font-bold text-xs transition shadow-xs">
+                    <i class="fa-solid fa-coins text-amber-500"></i>
+                    <span id="header-points-val">230</span> pts
+                </button>
+                
+                <!-- Frame Toggle button for desktop -->
+                <button onclick="toggleViewMode()" title="Alternar Modo de Exibição" class="hidden sm:flex w-8 h-8 rounded-full bg-gray-100 items-center justify-center text-gray-600 hover:bg-gray-200 transition">
+                    <i class="fa-solid fa-expand text-xs" id="expand-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTENT BODY -->
+        <main class="flex-1 overflow-y-auto no-scrollbar relative pb-20" id="main-scroll-container">
+
+            <!-- ========================================== -->
+            <!-- TAB 1: INÍCIO (HOME) -->
+            <!-- ========================================== -->
+            <div id="tab-home" class="tab-content active p-4 space-y-4">
+                
+                <!-- Personalized Welcome Banner -->
+                <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-500 rounded-3xl p-4 text-white shadow-lg shadow-brand-700/20 relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <span class="inline-block bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide mb-2 text-rose-100">
+                                ❤️ Cada doação vale uma vida
+                            </span>
+                            <h2 class="text-xl font-extrabold font-outfit">Olá, <span id="user-greeting-name">Ana</span>! 👋</h2>
+                            <p class="text-xs text-rose-100 mt-1 max-w-[210px] leading-relaxed">
+                                Seu pet pode ser o herói de outro animal hoje. Acompanhe doações e ganhe prêmios!
+                            </p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" 
+                             alt="Tutor" 
+                             class="w-12 h-12 rounded-full border-2 border-white/80 object-cover shadow-sm">
+                    </div>
+                </div>
+
+                <!-- Emergency Urgency Banner -->
+                <div class="bg-amber-50 border-2 border-brand-500 rounded-2xl p-3.5 shadow-sm relative overflow-hidden urgent-pulse">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                            <i class="fa-solid fa-kit-medical text-lg animate-bounce"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider">
+                                    🚨 Alerta de Urgência
+                                </span>
+                                <span class="text-[11px] font-bold text-gray-500">2,4 km de você</span>
+                            </div>
+                            <h3 class="font-bold text-sm text-gray-900 mt-1">Sangue tipo <span class="text-brand-600">DEA 1.1 Positivo</span> necessário!</h3>
+                            <p class="text-xs text-gray-600 mt-0.5">Hospital Vida Pet precisa para o cão Thor em estado crítico.</p>
+                            <button onclick="openBookingModal(1)" class="mt-2.5 w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition active:scale-95">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Quero Doar / Agendar Doação
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Pet Card Summary -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-sm text-gray-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-dog text-brand-600"></i>
+                            Meu Pet Doador Ativo
+                        </h3>
+                        <button onclick="switchTab('pets')" class="text-xs font-semibold text-brand-600 hover:underline flex items-center gap-1">
+                            Ver Carteirinha <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <div id="home-pet-card-container">
+                        <!-- Dynamic Content injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions Grid -->
+                <div class="grid grid-cols-4 gap-2.5">
+                    <button onclick="switchTab('pets')" class="bg-white hover:bg-rose-50 border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center text-center transition group shadow-xs">
+                        <div class="w-10 h-10 rounded-xl bg-rose-100 text-brand-600 flex items-center justify-center mb-1 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-plus-circle text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700 leading-tight">Cadastrar Pet</span>
+                    </button>
+
+                    <button onclick="switchTab('mapa')" class="bg-white hover:bg-emerald-50 border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center text-center transition group shadow-xs">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-1 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-hospital-user text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700 leading-tight">Clínicas</span>
+                    </button>
+
+                    <button onclick="switchTab('pontos')" class="bg-white hover:bg-amber-50 border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center text-center transition group shadow-xs">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-1 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-coins text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700 leading-tight">Meus Pontos</span>
+                    </button>
+
+                    <button onclick="switchTab('pontos')" class="bg-white hover:bg-purple-50 border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center text-center transition group shadow-xs">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-1 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-gift text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700 leading-tight">Brindes</span>
+                    </button>
+                </div>
+
+                <!-- Educational Carousel / Tips -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
+                    <h3 class="font-bold text-sm text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        Quem pode doar sangue?
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 flex items-start gap-2">
+                            <i class="fa-solid fa-weight-scale text-brand-600 text-sm mt-0.5"></i>
+                            <div>
+                                <strong class="block text-gray-800">Peso Adequado</strong>
+                                <span class="text-gray-500 text-[11px]">Cães ≥ 25kg<br>Gatos ≥ 4kg</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 flex items-start gap-2">
+                            <i class="fa-solid fa-cake-candles text-brand-600 text-sm mt-0.5"></i>
+                            <div>
+                                <strong class="block text-gray-800">Idade Ideal</strong>
+                                <span class="text-gray-500 text-[11px]">De 1 a 8 anos de idade</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 flex items-start gap-2">
+                            <i class="fa-solid fa-syringe text-brand-600 text-sm mt-0.5"></i>
+                            <div>
+                                <strong class="block text-gray-800">Saúde em Dia</strong>
+                                <span class="text-gray-500 text-[11px]">Vacinas & vermífugos ok</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 flex items-start gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-brand-600 text-sm mt-0.5"></i>
+                            <div>
+                                <strong class="block text-gray-800">Intervalo Seguro</strong>
+                                <span class="text-gray-500 text-[11px]">Mínimo 60 dias entre doações</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 2: MEUS PETS & CADASTRO DE PET -->
+            <!-- ========================================== -->
+            <div id="tab-pets" class="tab-content p-4 space-y-4">
+                
+                <!-- Digital Donor Card Header -->
+                <div class="flex justify-between items-center">
+                    <h2 class="font-outfit font-extrabold text-lg text-gray-900">Carteirinha Digital do Doador</h2>
+                    <span class="text-xs bg-rose-100 text-brand-700 font-bold px-2 py-1 rounded-full">
+                        <i class="fa-solid fa-qrcode mr-1"></i> Validada
+                    </span>
+                </div>
+
+                <!-- Digital ID Card Render -->
+                <div id="digital-card-wrapper">
+                    <!-- Injected via Javascript -->
+                </div>
+
+                <!-- Form Card to Add New Pet -->
+                <div class="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm space-y-4">
+                    <div class="border-b border-gray-100 pb-3 flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+                                <i class="fa-solid fa-paw text-brand-600"></i>
+                                Cadastrar Novo Pet
+                            </h3>
+                            <p class="text-xs text-gray-500">Ganhe +10 pontos ao completar o cadastro!</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded-full">
+                            +10 PTS
+                        </span>
+                    </div>
+
+                    <form id="add-pet-form" onsubmit="handlePetSubmit(event)" class="space-y-3">
+                        <!-- Pet Photo Upload Simulation -->
+                        <div class="flex justify-center">
+                            <div class="relative">
+                                <img id="pet-photo-preview" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=250" 
+                                     alt="Preview Pet" class="w-20 h-20 rounded-full object-cover border-2 border-brand-500 p-0.5 shadow-sm">
+                                <label for="pet-photo-input" class="absolute bottom-0 right-0 bg-brand-600 text-white w-7 h-7 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:bg-brand-700">
+                                    <i class="fa-solid fa-camera text-xs"></i>
+                                </label>
+                                <input type="file" id="pet-photo-input" accept="image/*" class="hidden" onchange="previewPetImage(event)">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nome do Pet *</label>
+                            <input type="text" id="pet-name-input" required placeholder="Ex: Thor, Mel, Bob" 
+                                   class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        </div>
+
+                        <!-- Species Selector Toggle -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Espécie *</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" id="specie-dog-btn" onclick="setSpecies('Cão')" 
+                                        class="p-2.5 rounded-xl border border-brand-500 bg-rose-50 text-brand-700 font-bold text-xs flex items-center justify-center gap-2 transition">
+                                    <i class="fa-solid fa-dog text-base"></i> Cão
+                                </button>
+                                <button type="button" id="specie-cat-btn" onclick="setSpecies('Gato')" 
+                                        class="p-2.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 font-semibold text-xs flex items-center justify-center gap-2 transition">
+                                    <i class="fa-solid fa-cat text-base"></i> Gato
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Idade *</label>
+                                <select id="pet-age-input" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="1 ano">1 ano</option>
+                                    <option value="2 anos">2 anos</option>
+                                    <option value="3 anos" selected>3 anos</option>
+                                    <option value="4 anos">4 anos</option>
+                                    <option value="5 anos">5 anos</option>
+                                    <option value="6+ anos">6+ anos</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Peso (kg) *</label>
+                                <input type="number" id="pet-weight-input" required min="1" max="100" placeholder="Ex: 22" value="22" 
+                                       class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Tipo Sanguíneo (Se souber)</label>
+                            <select id="pet-blood-input" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                <option value="DEA 1.1 Positivo">DEA 1.1 Positivo (Canino)</option>
+                                <option value="DEA 1.1 Negativo">DEA 1.1 Negativo (Canino)</option>
+                                <option value="Tipo A">Tipo A (Felino)</option>
+                                <option value="Tipo B">Tipo B (Felino)</option>
+                                <option value="Ainda Não Avaliado">Ainda Não Avaliado</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Localização *</label>
+                            <input type="text" id="pet-location-input" required placeholder="Ex: São Paulo - SP" value="São Paulo - SP" 
+                                   class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition active:scale-95 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Salvar e Validar Pet
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 3: MAPA & CLÍNICAS PARCEIRAS -->
+            <!-- ========================================== -->
+            <div id="tab-mapa" class="tab-content p-4 space-y-4">
+                
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="font-outfit font-extrabold text-lg text-gray-900">Clínicas Parceiras</h2>
+                        <p class="text-xs text-gray-500">Encontre um ponto de coleta próximo</p>
+                    </div>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">
+                        <i class="fa-solid fa-location-dot"></i> 3 na região
+                    </span>
+                </div>
+
+                <!-- Filter Pills -->
+                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                    <button onclick="filterClinics('all')" id="btn-filter-all" class="px-3 py-1.5 rounded-full text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-xs">
+                        Todas
+                    </button>
+                    <button onclick="filterClinics('urgent')" id="btn-filter-urgent" class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-700 border border-gray-200 whitespace-nowrap hover:bg-gray-50">
+                        🚨 Com Doação Urgente
+                    </button>
+                    <button onclick="filterClinics('near')" id="btn-filter-near" class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-700 border border-gray-200 whitespace-nowrap hover:bg-gray-50">
+                        📍 Mais Próximas
+                    </button>
+                </div>
+
+                <!-- SIMULATED INTERACTIVE MAP VISUAL -->
+                <div class="relative w-full h-48 rounded-3xl overflow-hidden border border-gray-200 map-bg shadow-inner flex items-center justify-center">
+                    <!-- Map Graphic Elements -->
+                    <div class="absolute inset-0 opacity-40">
+                        <div class="absolute top-1/2 left-0 w-full h-6 bg-slate-300 -translate-y-1/2"></div>
+                        <div class="absolute top-0 left-1/3 h-full w-6 bg-slate-300"></div>
+                        <div class="absolute bottom-4 right-6 w-20 h-20 bg-emerald-200 rounded-full"></div>
+                    </div>
+
+                    <!-- User Pulse Marker -->
+                    <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div class="relative flex items-center justify-center">
+                            <span class="animate-ping absolute inline-flex h-8 w-8 rounded-full bg-sky-400 opacity-75"></span>
+                            <div class="w-5 h-5 bg-sky-600 border-2 border-white rounded-full shadow-md"></div>
+                        </div>
+                    </div>
+
+                    <!-- Clinic Pins -->
+                    <!-- Pin 1: Urgent -->
+                    <button onclick="openBookingModal(1)" class="absolute top-8 left-12 z-20 group transition hover:scale-110">
+                        <div class="bg-brand-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-full shadow-md flex items-center gap-1 urgent-pulse">
+                            <i class="fa-solid fa-hospital"></i> Vida Pet
+                        </div>
+                        <i class="fa-solid fa-location-dot text-2xl text-brand-600 drop-shadow-md block text-center -mt-1"></i>
+                    </button>
+
+                    <!-- Pin 2: Normal -->
+                    <button onclick="openBookingModal(2)" class="absolute bottom-8 right-12 z-20 group transition hover:scale-110">
+                        <div class="bg-slate-800 text-white font-bold text-[10px] px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                            Patas & Cia
+                        </div>
+                        <i class="fa-solid fa-location-dot text-xl text-slate-800 drop-shadow-md block text-center -mt-1"></i>
+                    </button>
+
+                    <!-- Pin 3: VetLife -->
+                    <button onclick="openBookingModal(3)" class="absolute top-6 right-20 z-20 group transition hover:scale-110">
+                        <div class="bg-slate-800 text-white font-bold text-[10px] px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                            VetLife
+                        </div>
+                        <i class="fa-solid fa-location-dot text-xl text-slate-800 drop-shadow-md block text-center -mt-1"></i>
+                    </button>
+
+                    <div class="absolute bottom-2 left-3 bg-white/80 backdrop-blur-xs px-2 py-0.5 rounded-md text-[10px] text-gray-600 font-medium z-10">
+                        <i class="fa-solid fa-hand-pointer mr-1 text-brand-600"></i> Clique nos pinos para agendar
+                    </div>
+                </div>
+
+                <!-- Clinic List -->
+                <div class="space-y-3" id="clinics-list-container">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+
+            </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 4: PONTOS & LOJA DE BRINDES -->
+            <!-- ========================================== -->
+            <div id="tab-pontos" class="tab-content p-4 space-y-4">
+                
+                <!-- Balance & Progress Dashboard -->
+                <div class="bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 rounded-3xl p-5 text-white shadow-lg shadow-amber-600/20 relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-xs text-amber-100 font-medium uppercase tracking-wider">Saldo de Pontos Solidários</span>
+                            <div class="text-3xl font-black font-outfit mt-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-coins text-amber-200"></i>
+                                <span id="wallet-points-display">230</span>
+                                <span class="text-sm font-normal text-amber-100">pts</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-2xl text-center">
+                            <span class="text-[10px] text-amber-100 block">Nível Atual</span>
+                            <span class="font-bold text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-award text-amber-200"></i>
+                                <span id="user-level-name">Amigo Doador</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Level Progress Bar -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[11px] text-amber-100 font-medium">
+                            <span>Iniciante 🐾</span>
+                            <span>Amigo ❤️</span>
+                            <span>Pet Herói 👑</span>
+                        </div>
+                        <div class="w-full bg-black/20 h-2.5 rounded-full overflow-hidden p-0.5">
+                            <div id="level-progress-bar" class="bg-gradient-to-r from-amber-200 to-yellow-100 h-full rounded-full transition-all duration-500" style="width: 46%;"></div>
+                        </div>
+                        <p class="text-[10px] text-amber-100 text-right mt-1">Faltam 270 pts para nível Pet Herói!</p>
+                    </div>
+                </div>
+
+                <!-- Points Log Accordion -->
+                <details class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden group">
+                    <summary class="p-3.5 font-bold text-xs text-gray-800 flex justify-between items-center cursor-pointer list-none">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-brand-600"></i>
+                            Histórico de Pontuação
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition"></i>
+                    </summary>
+                    <div class="px-3.5 pb-3.5 border-t border-gray-100 space-y-2 text-xs" id="points-history-list">
+                        <!-- Dynamic JS rendering -->
+                    </div>
+                </details>
+
+                <!-- Rewards Category Navigation -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-outfit font-extrabold text-base text-gray-900">Catálogo de Recompensas</h3>
+                        <span class="text-xs text-gray-500">Troque seus pontos</span>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div class="grid grid-cols-3 gap-1.5 bg-gray-100 p-1 rounded-2xl text-center text-xs font-bold">
+                        <button onclick="filterRewards('pets')" id="reward-tab-pets" class="py-2 rounded-xl bg-white text-brand-700 shadow-xs transition">
+                            🐶 Brindes Pets
+                        </button>
+                        <button onclick="filterRewards('discounts')" id="reward-tab-discounts" class="py-2 rounded-xl text-gray-600 hover:text-gray-900 transition">
+                            🏷️ Descontos
+                        </button>
+                        <button onclick="filterRewards('certs')" id="reward-tab-certs" class="py-2 rounded-xl text-gray-600 hover:text-gray-900 transition">
+                            📜 Reconhecimento
+                        </button>
+                    </div>
+
+                    <!-- Rewards Grid List -->
+                    <div class="grid grid-cols-2 gap-3" id="rewards-grid-container">
+                        <!-- Dynamic JS injected content -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 5: PERFIL DO TUTOR & MEUS VOUCHERS -->
+            <!-- ========================================== -->
+            <div id="tab-perfil" class="tab-content p-4 space-y-4">
+                
+                <div class="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm text-center space-y-3">
+                    <div class="relative inline-block">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" 
+                             alt="Ana Silva" class="w-20 h-20 rounded-full object-cover border-4 border-rose-100 shadow-sm mx-auto">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 border-2 border-white w-5 h-5 rounded-full"></span>
+                    </div>
+
+                    <div>
+                        <h2 class="font-outfit font-extrabold text-lg text-gray-900">Ana Silva</h2>
+                        <p class="text-xs text-gray-500">Tutor(a) doador(a) verificado(a)</p>
+                        <p class="text-[11px] text-gray-400 mt-0.5"><i class="fa-solid fa-location-dot"></i> São Paulo - SP</p>
+                    </div>
+
+                    <!-- Tutor Stats Row -->
+                    <div class="grid grid-cols-3 gap-2 pt-2 border-t border-gray-100 text-center">
+                        <div class="bg-gray-50 p-2 rounded-xl">
+                            <span class="block text-lg font-black text-brand-600 font-outfit" id="profile-total-donations">2</span>
+                            <span class="text-[10px] text-gray-500 font-medium">Doações</span>
+                        </div>
+                        <div class="bg-gray-50 p-2 rounded-xl">
+                            <span class="block text-lg font-black text-amber-600 font-outfit" id="profile-total-points">230</span>
+                            <span class="text-[10px] text-gray-500 font-medium">Pontos</span>
+                        </div>
+                        <div class="bg-gray-50 p-2 rounded-xl">
+                            <span class="block text-lg font-black text-purple-600 font-outfit" id="profile-total-pets">1</span>
+                            <span class="text-[10px] text-gray-500 font-medium">Pets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Diploma Trigger Button -->
+                <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-4 text-white flex items-center justify-between shadow-md">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center text-amber-100 text-xl">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Certificado de Pet Herói</h3>
+                            <p class="text-[11px] text-amber-100">Emita seu certificado para impressão ou apresentação!</p>
+                        </div>
+                    </div>
+                    <button onclick="openCertificateModal()" class="bg-white text-amber-800 hover:bg-amber-50 font-bold px-3 py-2 rounded-xl text-xs shadow-xs transition">
+                        Ver
+                    </button>
+                </div>
+
+                <!-- My Vouchers Section -->
+                <div class="bg-white rounded-3xl p-4 border border-gray-100 shadow-sm space-y-3">
+                    <h3 class="font-bold text-sm text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-ticket text-brand-600"></i>
+                        Meus Cupons & Vouchers Resgatados
+                    </h3>
+
+                    <div id="my-vouchers-container" class="space-y-2">
+                        <!-- Dynamic Vouchers injected JS -->
+                    </div>
+                </div>
+
+                <!-- Support & Info Section -->
+                <div class="bg-gray-50 rounded-2xl p-3.5 border border-gray-200 text-xs text-gray-600 space-y-2">
+                    <div class="flex items-center gap-2 font-bold text-gray-800">
+                        <i class="fa-solid fa-shield-heart text-brand-600"></i> Projeto de Inovação Hemopet
+                    </div>
+                    <p class="text-[11px] leading-relaxed">
+                        A doação de sangue animal é realizada por equipes veterinárias qualificadas priorizando o bem-estar dos pets.
+                    </p>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <nav class="bg-white/95 backdrop-blur-md border-t border-gray-100 px-3 py-2 absolute bottom-0 left-0 right-0 z-30 flex justify-around items-center shrink-0">
+            
+            <button onclick="switchTab('home')" id="nav-home" class="nav-btn active flex flex-col items-center gap-1 text-brand-600 transition">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-bold">Início</span>
+            </button>
+
+            <button onclick="switchTab('mapa')" id="nav-mapa" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition">
+                <i class="fa-solid fa-map-location-dot text-lg"></i>
+                <span class="text-[10px] font-medium">Clínicas</span>
+            </button>
+
+            <button onclick="switchTab('pets')" id="nav-pets" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition">
+                <i class="fa-solid fa-paw text-lg"></i>
+                <span class="text-[10px] font-medium">Meus Pets</span>
+            </button>
+
+            <button onclick="switchTab('pontos')" id="nav-pontos" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition">
+                <i class="fa-solid fa-gift text-lg"></i>
+                <span class="text-[10px] font-medium">Brindes</span>
+            </button>
+
+            <button onclick="switchTab('perfil')" id="nav-perfil" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-[10px] font-medium">Perfil</span>
+            </button>
+
+        </nav>
+
+        <!-- ========================================== -->
+        <!-- MODALS & OVERLAYS -->
+        <!-- ========================================== -->
+
+        <!-- MODAL 1: BOOKING DONATION -->
+        <div id="booking-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+            <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300">
+                <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-rose-100 text-brand-600 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-calendar-plus text-sm"></i>
+                        </div>
+                        <h3 class="font-outfit font-extrabold text-base text-gray-900">Agendar Doação / Avaliação</h3>
+                    </div>
+                    <button onclick="closeBookingModal()" class="w-7 h-7 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div id="booking-clinic-info" class="bg-rose-50 border border-rose-100 rounded-2xl p-3 text-xs text-brand-800">
+                    <!-- Dynamic Clinic Info -->
+                </div>
+
+                <form onsubmit="confirmBooking(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Selecione o Pet Doador</label>
+                        <select id="booking-pet-select" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-brand-500">
+                            <!-- Injected JS -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Data Preferencial</label>
+                        <input type="date" id="booking-date-input" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Horário Disponível</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="selectTimeSlot(this)" class="time-slot-btn py-2 border rounded-xl text-xs font-bold bg-brand-600 text-white border-brand-600">09:00</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="time-slot-btn py-2 border rounded-xl text-xs font-semibold bg-gray-50 text-gray-700 border-gray-200">11:30</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="time-slot-btn py-2 border rounded-xl text-xs font-semibold bg-gray-50 text-gray-700 border-gray-200">14:30</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-[11px] text-amber-800 flex items-center gap-2">
+                        <i class="fa-solid fa-coins text-amber-500 text-base"></i>
+                        <span>Confirmando a doação com sucesso você ganha <strong>+100 pontos</strong> solidários!</span>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-2xl shadow-md transition text-xs">
+                        Confirmar Agendamento
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL 2: CERTIFICADO DE PET HERÓI -->
+        <div id="certificate-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+            <div class="bg-white w-full max-w-lg rounded-3xl p-6 text-gray-800 space-y-4 shadow-2xl relative overflow-hidden border-8 border-amber-100">
+                
+                <!-- Close Button -->
+                <button onclick="closeCertificateModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center z-20">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <!-- DIPLOMA LAYOUT -->
+                <div class="border-2 border-amber-400 p-4 rounded-2xl text-center space-y-3 bg-[#FFFDF9] relative">
+                    <!-- Background Watermark Paw -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                        <i class="fa-solid fa-paw text-[180px] text-amber-900"></i>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-award text-amber-500 text-2xl"></i>
+                        <span class="font-serif font-bold text-amber-800 uppercase tracking-widest text-xs">Hemopet Brasil</span>
+                        <i class="fa-solid fa-award text-amber-500 text-2xl"></i>
+                    </div>
+
+                    <h2 class="font-serif font-bold text-2xl text-amber-900 uppercase tracking-wide">Certificado de Pet Herói</h2>
+                    <p class="text-xs text-gray-500 italic">Concedido por relevante ato de amor e salvação de vidas animais</p>
+
+                    <div class="py-2">
+                        <p class="text-xs text-gray-600">Certificamos com imenso orgulho que o pet</p>
+                        <h3 class="font-outfit font-extrabold text-2xl text-brand-700 my-1 underline decoration-amber-400 underline-offset-4" id="cert-pet-name">
+                            Toby
+                        </h3>
+                        <p class="text-xs text-gray-600">sob cuidados de <strong id="cert-tutor-name" class="text-gray-800">Ana Silva</strong>, realizou a doação voluntária de sangue e ajudou a salvar vidas!</p>
+                    </div>
+
+                    <!-- Stamp Seal & Signatures -->
+                    <div class="flex justify-between items-end pt-4 px-2 border-t border-amber-200">
+                        <div class="text-left">
+                            <span class="block font-serif text-[11px] text-gray-800 font-bold" id="cert-date-display">12 de Setembro, 2025</span>
+                            <span class="text-[9px] text-gray-400">Data de Emissão</span>
+                        </div>
+
+                        <!-- Gold Stamp -->
+                        <div class="w-14 h-14 rounded-full gold-stamp text-white flex flex-col items-center justify-center text-[8px] font-bold shadow-md transform rotate-12">
+                            <i class="fa-solid fa-shield-dog text-sm"></i>
+                            <span>PET HERÓI</span>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="block font-serif text-[11px] text-gray-800 font-bold">Dr. Carlos Vet</span>
+                            <span class="text-[9px] text-gray-400">CRMV-SP 48.291</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-print"></i> Imprimir Certificado
+                    </button>
+                    <button onclick="closeCertificateModal()" class="px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl text-xs">
+                        Fechar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DYNAMIC TOAST NOTIFICATION -->
+        <div id="toast-notification" class="fixed top-12 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold opacity-0 pointer-events-none transition-all duration-300">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toast-icon"></i>
+            <span id="toast-message">Operação realizada com sucesso!</span>
+        </div>
+
+    </div>
+
+    <script>
+        /* ======================================================
+           HEMOPET - APPLICATION STATE & CONTROLLERS
+           ====================================================== */
+        
+        // Initial Mock State
+        const appState = {
+            user: {
+                name: "Ana Silva",
+                points: 230,
+                level: "Amigo Doador",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250"
+            },
+            selectedSpecies: 'Cão',
+            activePetIndex: 0,
+            pets: [
+                {
+                    id: 1,
+                    name: "Toby",
+                    species: "Cão",
+                    breed: "Golden Retriever",
+                    age: "3 anos",
+                    weight: 22,
+                    bloodType: "DEA 1.1 Positivo",
+                    location: "São Paulo - SP",
+                    status: "Apto para Doar",
+                    avatar: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=400",
+                    lastDonation: "12/09/2025",
+                    vaccines: "V10 & Raiva (Em dia)"
+                }
+            ],
+            clinics: [
+                {
+                    id: 1,
+                    name: "Hospital Veterinário Vida Pet",
+                    dist: "2,4 km",
+                    rating: "4.8",
+                    address: "Av. das Flores, 123 - SP",
+                    phone: "(11) 98765-4321",
+                    urgent: true,
+                    urgentType: "DEA 1.1 Positivo",
+                    hours: "Seg a Sáb - 8h às 18h"
+                },
+                {
+                    id: 2,
+                    name: "Clínica Patas & Cia",
+                    dist: "3,1 km",
+                    rating: "4.7",
+                    address: "Rua dos Pinheiros, 450 - SP",
+                    phone: "(11) 97654-3210",
+                    urgent: false,
+                    hours: "Seg a Sex - 9h às 17h"
+                },
+                {
+                    id: 3,
+                    name: "VetLife Centro Veterinário",
+                    dist: "5,7 km",
+                    rating: "4.9",
+                    address: "Alameda Santos, 890 - SP",
+                    phone: "(11) 96543-2109",
+                    urgent: false,
+                    hours: "24h"
+                }
+            ],
+            rewards: [
+                { id: 1, category: 'pets', name: 'Brinquedo Corda Mordedor', cost: 50, icon: 'fa-bone', img: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&q=80&w=200' },
+                { id: 2, category: 'pets', name: 'Kit Petiscos Naturais 200g', cost: 70, icon: 'fa-cookie-bite', img: 'https://images.unsplash.com/photo-1582798358481-d199fb7347bb?auto=format&fit=crop&q=80&w=200' },
+                { id: 3, category: 'pets', name: 'Bandana Pet Herói Red', cost: 40, icon: 'fa-shirt', img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&q=80&w=200' },
+                { id: 4, category: 'pets', name: 'Kit Cuidados Shampoo Vet', cost: 100, icon: 'fa-pump-soap', img: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=200' },
+                { id: 5, category: 'discounts', name: 'Cupom 10% OFF Pet Love', cost: 80, icon: 'fa-tags', img: 'https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?auto=format&fit=crop&q=80&w=200' },
+                { id: 6, category: 'discounts', name: '15% OFF Banho & Tosa Feliz', cost: 60, icon: 'fa-scissors', img: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=200' },
+                { id: 7, category: 'discounts', name: '5% OFF Ração Premium', cost: 90, icon: 'fa-bowl-food', img: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=200' },
+                { id: 8, category: 'certs', name: 'Certificado Digital Impresso', cost: 0, icon: 'fa-award', img: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&q=80&w=200' }
+            ],
+            history: [
+                { id: 1, title: 'Doação realizada e confirmada', points: '+100 pts', date: '12/09/2025', icon: 'fa-droplet text-brand-600' },
+                { id: 2, title: 'Avaliação veterinária completa', points: '+20 pts', date: '28/08/2025', icon: 'fa-stethoscope text-emerald-600' },
+                { id: 3, title: 'Cadastro inicial & Campanha', points: '+10 pts', date: '15/08/2025', icon: 'fa-book text-amber-600' }
+            ],
+            vouchers: [
+                { id: 'HEMO-8492-LOVE', title: 'Cupom Pet Love 10% OFF', code: 'PETLOVE10-HEMO', date: '14/09/2025' }
+            ],
+            selectedClinicForBooking: null
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+        });
+
+        // Tab Switching Engine
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-brand-600', 'active');
+                btn.classList.add('text-gray-400');
+            });
+
+            const targetTab = document.getElementById(`tab-${tabName}`);
+            const targetNav = document.getElementById(`nav-${tabName}`);
+
+            if (targetTab) targetTab.classList.add('active');
+            if (targetNav) {
+                targetNav.classList.remove('text-gray-400');
+                targetNav.classList.add('text-brand-600', 'active');
+            }
+
+            // Scroll top
+            document.getElementById('main-scroll-container').scrollTop = 0;
+        }
+
+        // Render Everything based on state
+        function renderAll() {
+            renderHeaderPoints();
+            renderHomePetCard();
+            renderDigitalCard();
+            renderClinics();
+            renderRewards('pets');
+            renderHistory();
+            renderVouchers();
+            renderProfile();
+        }
+
+        function renderHeaderPoints() {
+            document.getElementById('header-points-val').innerText = appState.user.points;
+            document.getElementById('wallet-points-display').innerText = appState.user.points;
+            document.getElementById('profile-total-points').innerText = appState.user.points;
+            document.getElementById('profile-total-pets').innerText = appState.pets.length;
+        }
+
+        function renderHomePetCard() {
+            const container = document.getElementById('home-pet-card-container');
+            if (appState.pets.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">Nenhum pet cadastrado ainda.</p>`;
+                return;
+            }
+
+            const pet = appState.pets[appState.activePetIndex];
+            container.innerHTML = `
+                <div class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                    <img src="${pet.avatar}" alt="${pet.name}" class="w-14 h-14 rounded-full object-cover border-2 border-brand-500 shadow-xs">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-gray-900 text-sm">${pet.name}</h4>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                ● ${pet.status}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">${pet.species} • ${pet.weight} kg • ${pet.age}</p>
+                        <span class="inline-block bg-rose-100 text-brand-700 font-extrabold text-[10px] px-2 py-0.5 rounded-md mt-1">
+                            🩸 ${pet.bloodType}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDigitalCard() {
+            const container = document.getElementById('digital-card-wrapper');
+            if (appState.pets.length === 0) return;
+
+            const pet = appState.pets[appState.activePetIndex];
+            container.innerHTML = `
+                <div class="bg-gradient-to-br from-brand-700 via-brand-600 to-rose-700 rounded-3xl p-5 text-white shadow-xl relative overflow-hidden space-y-4">
+                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-heart-pulse text-rose-200 text-xl"></i>
+                            <div>
+                                <span class="font-outfit font-extrabold text-sm tracking-wide block">CARTEIRA DO DOADOR</span>
+                                <span class="text-[9px] text-rose-200 uppercase tracking-widest">Hemopet Oficial</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-paw text-2xl text-white/40"></i>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <img src="${pet.avatar}" alt="${pet.name}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md">
+                        <div class="space-y-0.5">
+                            <h3 class="text-xl font-black font-outfit leading-tight">${pet.name}</h3>
+                            <p class="text-xs text-rose-100">${pet.species} (${pet.breed || 'SRD'}) • ${pet.weight} kg</p>
+                            <div class="inline-flex items-center gap-1 bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-lg text-[11px] font-bold text-white mt-1">
+                                <i class="fa-solid fa-droplet text-rose-300"></i> ${pet.bloodType}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-white/20 flex justify-between items-center text-[11px] text-rose-100">
+                        <div>
+                            <span class="block text-[9px] text-rose-200 uppercase">Última doação</span>
+                            <span class="font-bold text-white">${pet.lastDonation || 'Pendente'}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-[9px] text-rose-200 uppercase">Vacinas</span>
+                            <span class="font-bold text-white">${pet.vaccines}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderClinics(filter = 'all') {
+            const container = document.getElementById('clinics-list-container');
+            container.innerHTML = '';
+
+            let list = appState.clinics;
+            if (filter === 'urgent') list = list.filter(c => c.urgent);
+
+            list.forEach(clinic => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-2";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-sm text-gray-900">${clinic.name}</h3>
+                                ${clinic.urgent ? '<span class="bg-rose-100 text-brand-700 text-[9px] font-extrabold px-2 py-0.5 rounded-full animate-pulse">URGENTE</span>' : ''}
+                            </div>
+                            <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-gray-400"></i> ${clinic.address}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${clinic.rating}</span>
+                            <span class="block text-[10px] text-gray-400">${clinic.dist}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-gray-50 text-xs">
+                        <span class="text-gray-500"><i class="fa-solid fa-clock text-gray-400 mr-1"></i> ${clinic.hours}</span>
+                        <button onclick="openBookingModal(${clinic.id})" class="bg-rose-50 hover:bg-brand-600 text-brand-700 hover:text-white font-bold px-3 py-1.5 rounded-xl transition text-xs">
+                            Agendar
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterClinics(type) {
+            ['all', 'urgent', 'near'].forEach(t => {
+                const btn = document.getElementById(`btn-filter-${t}`);
+                if (btn) {
+                    btn.className = "px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-700 border border-gray-200 whitespace-nowrap hover:bg-gray-50";
+                }
+            });
+            document.getElementById(`btn-filter-${type}`).className = "px-3 py-1.5 rounded-full text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-xs";
+            renderClinics(type);
+        }
+
+        function renderRewards(cat = 'pets') {
+            const container = document.getElementById('rewards-grid-container');
+            container.innerHTML = '';
+
+            // Update Tab styles
+            ['pets', 'discounts', 'certs'].forEach(c => {
+                const btn = document.getElementById(`reward-tab-${c}`);
+                if (btn) btn.className = "py-2 rounded-xl text-gray-600 hover:text-gray-900 transition";
+            });
+            document.getElementById(`reward-tab-${cat}`).className = "py-2 rounded-xl bg-white text-brand-700 shadow-xs font-bold transition";
+
+            const list = appState.rewards.filter(r => r.category === cat);
+
+            list.forEach(reward => {
+                const item = document.createElement('div');
+                item.className = "bg-white rounded-2xl p-3 border border-gray-100 shadow-xs flex flex-col justify-between space-y-2";
+                item.innerHTML = `
+                    <div>
+                        <img src="${reward.img}" alt="${reward.name}" class="w-full h-24 object-cover rounded-xl mb-2">
+                        <h4 class="font-bold text-xs text-gray-800 leading-snug">${reward.name}</h4>
+                    </div>
+
+                    <div class="pt-2 border-t border-gray-50 flex items-center justify-between">
+                        <span class="text-xs font-black text-amber-600">
+                            ${reward.cost > 0 ? reward.cost + ' pts' : 'Grátis'}
+                        </span>
+                        <button onclick="redeemReward(${reward.id})" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-2.5 py-1 rounded-xl text-[10px] shadow-xs transition">
+                            Resgatar
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function redeemReward(id) {
+            const reward = appState.rewards.find(r => r.id === id);
+            if (!reward) return;
+
+            if (reward.cost > appState.user.points) {
+                showToast("Pontos insuficientes para este resgate!", "error");
+                return;
+            }
+
+            // Deduct points
+            appState.user.points -= reward.cost;
+            
+            // Add voucher code
+            const randomCode = 'HEMO-' + Math.floor(1000 + Math.random() * 9000) + '-PET';
+            appState.vouchers.push({
+                id: randomCode,
+                title: reward.name,
+                code: randomCode,
+                date: new Date().toLocaleDateString('pt-BR')
+            });
+
+            // Log History
+            if (reward.cost > 0) {
+                appState.history.unshift({
+                    id: Date.now(),
+                    title: `Resgate: ${reward.name}`,
+                    points: `-${reward.cost} pts`,
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    icon: 'fa-gift text-purple-600'
+                });
+            }
+
+            renderAll();
+            showToast(`Recompensa resgatada! Código: ${randomCode}`);
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('points-history-list');
+            container.innerHTML = '';
+            appState.history.forEach(h => {
+                const row = document.createElement('div');
+                row.className = "flex justify-between items-center py-1 border-b border-gray-50 last:border-0";
+                row.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid ${h.icon}"></i>
+                        <div>
+                            <span class="font-semibold text-gray-800">${h.title}</span>
+                            <span class="block text-[10px] text-gray-400">${h.date}</span>
+                        </div>
+                    </div>
+                    <span class="font-bold ${h.points.startsWith('+') ? 'text-emerald-600' : 'text-rose-600'}">${h.points}</span>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function renderVouchers() {
+            const container = document.getElementById('my-vouchers-container');
+            container.innerHTML = '';
+
+            if (appState.vouchers.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400">Nenhum cupom resgatado ainda.</p>';
+                return;
+            }
+
+            appState.vouchers.forEach(v => {
+                const div = document.createElement('div');
+                div.className = "bg-amber-50 border border-amber-200 rounded-2xl p-3 flex justify-between items-center";
+                div.innerHTML = `
+                    <div>
+                        <strong class="block text-xs text-gray-900">${v.title}</strong>
+                        <span class="text-[10px] text-amber-800 font-mono font-bold">CÓDIGO: ${v.code}</span>
+                    </div>
+                    <button onclick="copyCode('${v.code}')" class="bg-amber-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                        Copiar
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderProfile() {
+            document.getElementById('profile-total-donations').innerText = "2";
+        }
+
+        function setSpecies(sp) {
+            appState.selectedSpecies = sp;
+            const dogBtn = document.getElementById('specie-dog-btn');
+            const catBtn = document.getElementById('specie-cat-btn');
+
+            if (sp === 'Cão') {
+                dogBtn.className = "p-2.5 rounded-xl border border-brand-500 bg-rose-50 text-brand-700 font-bold text-xs flex items-center justify-center gap-2 transition";
+                catBtn.className = "p-2.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 font-semibold text-xs flex items-center justify-center gap-2 transition";
+            } else {
+                catBtn.className = "p-2.5 rounded-xl border border-brand-500 bg-rose-50 text-brand-700 font-bold text-xs flex items-center justify-center gap-2 transition";
+                dogBtn.className = "p-2.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 font-semibold text-xs flex items-center justify-center gap-2 transition";
+            }
+        }
+
+        function previewPetImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('pet-photo-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handlePetSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('pet-name-input').value;
+            const age = document.getElementById('pet-age-input').value;
+            const weight = document.getElementById('pet-weight-input').value;
+            const blood = document.getElementById('pet-blood-input').value;
+            const location = document.getElementById('pet-location-input').value;
+            const photoSrc = document.getElementById('pet-photo-preview').src;
+
+            const newPet = {
+                id: Date.now(),
+                name: name,
+                species: appState.selectedSpecies,
+                breed: "SRD",
+                age: age,
+                weight: weight,
+                bloodType: blood,
+                location: location,
+                status: "Apto para Doar",
+                avatar: photoSrc,
+                lastDonation: "Aguardando 1ª Doação",
+                vaccines: "Verificação pendente"
+            };
+
+            appState.pets.push(newPet);
+            appState.activePetIndex = appState.pets.length - 1;
+
+            // Award +10 points
+            appState.user.points += 10;
+            appState.history.unshift({
+                id: Date.now(),
+                title: `Cadastro do pet: ${name}`,
+                points: '+10 pts',
+                date: new Date().toLocaleDateString('pt-BR'),
+                icon: 'fa-paw text-brand-600'
+            });
+
+            renderAll();
+            showToast(`Pet ${name} cadastrado com sucesso! +10 pontos concedidos! 🎉`);
+            switchTab('pets');
+        }
+
+        // Booking Modal Handlers
+        function openBookingModal(clinicId) {
+            const clinic = appState.clinics.find(c => c.id === clinicId) || appState.clinics[0];
+            appState.selectedClinicForBooking = clinic;
+
+            const container = document.getElementById('booking-clinic-info');
+            container.innerHTML = `
+                <strong class="block font-bold text-gray-900">${clinic.name}</strong>
+                <span>${clinic.address} (${clinic.dist})</span>
+            `;
+
+            // Populate pets dropdown
+            const select = document.getElementById('booking-pet-select');
+            select.innerHTML = '';
+            appState.pets.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = `${p.name} (${p.species} - ${p.bloodType})`;
+                select.appendChild(opt);
+            });
+
+            // Set default date tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('booking-date-input').value = tomorrow.toISOString().split('T')[0];
+
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function selectTimeSlot(btn) {
+            document.querySelectorAll('.time-slot-btn').forEach(b => {
+                b.className = "time-slot-btn py-2 border rounded-xl text-xs font-semibold bg-gray-50 text-gray-700 border-gray-200";
+            });
+            btn.className = "time-slot-btn py-2 border rounded-xl text-xs font-bold bg-brand-600 text-white border-brand-600";
+        }
+
+        function confirmBooking(e) {
+            e.preventDefault();
+            closeBookingModal();
+
+            // Award points for donation scheduling
+            appState.user.points += 100;
+            appState.history.unshift({
+                id: Date.now(),
+                title: `Doação agendada no ${appState.selectedClinicForBooking.name}`,
+                points: '+100 pts',
+                date: new Date().toLocaleDateString('pt-BR'),
+                icon: 'fa-calendar-check text-emerald-600'
+            });
+
+            renderAll();
+            showToast("Doação agendada com sucesso! +100 pontos garantidos!");
+        }
+
+        // Certificate Modal Handlers
+        function openCertificateModal() {
+            const activePet = appState.pets[appState.activePetIndex] || { name: 'Toby' };
+            document.getElementById('cert-pet-name').innerText = activePet.name;
+            document.getElementById('cert-tutor-name').innerText = appState.user.name;
+            document.getElementById('cert-date-display').innerText = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+            
+            document.getElementById('certificate-modal').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificate-modal').classList.add('hidden');
+        }
+
+        // Copy Code to Clipboard Helper
+        function copyCode(text) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("Código copiado para a área de transferência!");
+        }
+
+        // Toast Helper
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = msg;
+            if (type === "error") {
+                toastIcon.className = "fa-solid fa-triangle-exclamation text-rose-400 text-base";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+            }
+
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Frame view toggle for desktop presentation
+        let isExpanded = false;
+        function toggleViewMode() {
+            const wrapper = document.querySelector('.phone-wrapper');
+            const icon = document.getElementById('expand-icon');
+            
+            if (!isExpanded) {
+                wrapper.style.maxWidth = '100%';
+                wrapper.style.maxHeight = '100vh';
+                wrapper.style.borderRadius = '0';
+                icon.className = 'fa-solid fa-compress text-xs';
+                isExpanded = true;
+            } else {
+                wrapper.style.maxWidth = '440px';
+                wrapper.style.maxHeight = '920px';
+                wrapper.style.borderRadius = '36px';
+                icon.className = 'fa-solid fa-expand text-xs';
+                isExpanded = false;
+            }
+        }
+    </script>
+</body>
+</html>
